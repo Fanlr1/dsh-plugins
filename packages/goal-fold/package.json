@@ -1,0 +1,47 @@
+{
+  "name": "dsh-plugin-goal-fold",
+  "version": "1.0.0",
+  "description": "Make the session GoalBar collapsible and expandable",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/client.js",
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/goal-fold"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/goal-fold#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "goal-fold"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-goal"
+      ],
+      "platform": "web"
+    }
+  }
+}

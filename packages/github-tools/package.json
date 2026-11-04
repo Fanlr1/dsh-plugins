@@ -1,0 +1,35 @@
+{
+  "name": "dsh-plugin-github-tools",
+  "version": "0.1.0",
+  "description": "只读 GitHub 工具：github_repo（元信息+文件树+单文件）与 github_probe（路由探针）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/github-tools"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/github-tools#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "github-tools"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

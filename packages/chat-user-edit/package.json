@@ -1,0 +1,45 @@
+{
+  "name": "dsh-plugin-chat-user-edit",
+  "version": "0.1.0",
+  "description": "编辑自己已发出的 user 消息（会话日志 append 一条 surface 替换）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/client.js",
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/chat-user-edit"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/chat-user-edit#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "chat-user-edit"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}

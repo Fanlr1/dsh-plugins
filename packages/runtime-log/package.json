@@ -1,0 +1,35 @@
+{
+  "name": "dsh-plugin-runtime-log",
+  "version": "1.0.0",
+  "description": "把 DSH 全系统日志落盘，补上 DSH 自身没有运行日志的缺口",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/runtime-log"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/runtime-log#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "runtime-log"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

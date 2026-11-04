@@ -1,0 +1,50 @@
+{
+  "name": "dsh-plugin-balance",
+  "version": "2.0.0",
+  "description": "Show DeepSeek balance in the composer dock (projection approach)",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/client.js",
+    "lib/index.js",
+    "lib/live.js",
+    "lib/projection.js",
+    "lib/usage.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/balance"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/balance#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "balance"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ],
+      "platform": "web"
+    }
+  }
+}

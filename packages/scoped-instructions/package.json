@@ -1,0 +1,35 @@
+{
+  "name": "dsh-plugin-scoped-instructions",
+  "version": "1.0.0",
+  "description": "Give subagents a trimmed workspace-instruction baseline: strip scope:main sections that only the main agent needs.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/scoped-instructions"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/scoped-instructions#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "scoped-instructions"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "dsh-plugin-hide-update-retry",
+  "version": "1.0.0",
+  "description": "隐藏桌面端的「重试更新」提示（自建未签名构建没有更新源，每次自动检查都失败）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/client.js",
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/hide-update-retry"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/hide-update-retry#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "hide-update-retry"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": []
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "dsh-plugin-chat-zoom",
+  "version": "1.2.1",
+  "description": "对话区缩放 + 列宽倍率（Ctrl+Alt+滚轮 缩放 / Ctrl+Alt+Shift+滚轮 调列宽）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/client.js",
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/chat-zoom"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/chat-zoom#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "chat-zoom"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}
