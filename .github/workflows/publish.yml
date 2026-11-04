@@ -1,0 +1,49 @@
+name: publish
+
+# Trusted Publishing（OIDC）发布会：无需长期 npm token
+# 前置：在 npmjs.com 每个包的 Settings → Trusted publishing 配置
+#   Provider: GitHub Actions
+#   Organization/user: Fanlr1
+#   Repository: dsh-plugins
+#   Workflow filename: publish.yml
+#   Allowed actions: 勾选 npm publish
+# 触发：打 tag（v*）或手动 workflow_dispatch
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # OIDC（Trusted Publishing 必需）
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - multi-edit
+          - bash
+          - loop-guard
+          - hub-finder
+          - session-tidy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+
+      - name: Check package
+        working-directory: packages/${{ matrix.package }}
+        run: node --check lib/index.js
+
+      - name: Publish (OIDC)
+        working-directory: packages/${{ matrix.package }}
+        run: npm publish --access public --provenance
