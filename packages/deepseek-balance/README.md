@@ -1,4 +1,4 @@
-# dsh-plugin-balance
+# dsh-plugin-deepseek-balance
 
 Show DeepSeek balance in the composer dock (projection approach)
 
@@ -16,7 +16,7 @@ Junction 方式（改源码立即生效）：
 ```powershell
 $nm  = "$env:USERPROFILE\.dsh\profiles\desktop\node_modules"
 $src = "<本仓库路径>\packages\balance"
-cmd /c mklink /J "$nm\dsh-plugin-balance" $src
+cmd /c mklink /J "$nm\dsh-plugin-deepseek-balance" $src
 ```
 
 然后在 profile 的 `cordis.patch.yml` 追加：
@@ -24,7 +24,7 @@ cmd /c mklink /J "$nm\dsh-plugin-balance" $src
 ```yaml
 - insert:
     - id: balance
-      name: 'dsh-plugin-balance'
+      name: 'dsh-plugin-deepseek-balance'
 ```
 
 **重启 DSH**。

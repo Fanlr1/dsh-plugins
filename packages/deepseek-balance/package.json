@@ -1,5 +1,5 @@
 {
-  "name": "dsh-plugin-balance",
+  "name": "dsh-plugin-deepseek-balance",
   "version": "2.0.0",
   "description": "Show DeepSeek balance in the composer dock (projection approach)",
   "type": "module",

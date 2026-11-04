@@ -13,7 +13,7 @@ DSH 的信条是 **Everything is a Plugin** —— 这些插件都来自日常�
 | [hub-finder](packages/hub-finder/) | 中文搜索 DSH 社区插件（工具 + 设置页 UI） | host + client |
 | [session-tidy](packages/session-tidy/) | 删除会话文件（官方只归档不删） | host + client |
 | [hw-monitor](packages/hw-monitor/) | 显存/内存实时监控（composer 旁） | host + client |
-| [balance](packages/balance/) | DeepSeek 余额/用量/峰谷预估 | host + client |
+| [deepseek-balance](packages/deepseek-balance/) | DeepSeek 余额/用量/峰谷预估（原 balance，npm 重名改名） | host + client |
 | [goal-fold](packages/goal-fold/) | 会话目标条折叠/展开 | client |
 | [queue-fold](packages/queue-fold/) | 排队消息条展开/收起 | client |
 | [chat-zoom](packages/chat-zoom/) | Ctrl+Alt+滚轮缩放对话区 + 列宽倍率 | client |
