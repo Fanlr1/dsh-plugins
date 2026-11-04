@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-bash",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Windows 上的 bash 工具（走 Git for Windows）+ 子 agent 隐藏 pwsh + 输出 spill + 后台 job",
   "type": "module",
   "main": "lib/index.js",

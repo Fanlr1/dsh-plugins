@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-hub-finder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "find_dsh_plugin：中文搜索 DSH 社区插件（数据源 api.dsh-plugin.org），返回 GitHub 地址与安装命令",
   "type": "module",
   "main": "lib/index.js",
