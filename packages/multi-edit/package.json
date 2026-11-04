@@ -1,0 +1,36 @@
+{
+  "name": "dsh-plugin-multi-edit",
+  "version": "1.0.0",
+  "description": "给 DSH agent 的 multi_edit 工具：一次调用改多文件/多处，两阶段预检 + dryRun",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-plugins.git",
+    "directory": "packages/multi-edit"
+  },
+  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/multi-edit#readme",
+  "bugs": {
+    "url": "https://github.com/OWNER/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "tools",
+    "multi-edit",
+    "batch-edit"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

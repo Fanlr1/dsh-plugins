@@ -1,0 +1,36 @@
+{
+  "name": "dsh-plugin-loop-guard",
+  "version": "0.1.0",
+  "description": "思维链循环守卫：滑动窗口压缩比 + 坍缩/短链判据，检出后截断本轮流（默认 cut）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-plugins.git",
+    "directory": "packages/loop-guard"
+  },
+  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/loop-guard#readme",
+  "bugs": {
+    "url": "https://github.com/OWNER/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "agent",
+    "reasoning",
+    "loop-guard"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "dsh-plugin-bash",
+  "version": "1.0.0",
+  "description": "Windows 上的 bash 工具（走 Git for Windows）+ 子 agent 隐藏 pwsh + 输出 spill + 后台 job",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-plugins.git",
+    "directory": "packages/bash"
+  },
+  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/bash#readme",
+  "bugs": {
+    "url": "https://github.com/OWNER/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "tools",
+    "bash",
+    "windows"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

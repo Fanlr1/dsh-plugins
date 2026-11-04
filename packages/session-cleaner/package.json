@@ -1,0 +1,45 @@
+{
+  "name": "dsh-plugin-session-cleaner",
+  "version": "1.0.0",
+  "description": "清理 DSH 会话文件（官方只归档不删除）：会话行菜单 + 侧边栏批量面板",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-plugins.git",
+    "directory": "packages/session-cleaner"
+  },
+  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/session-cleaner#readme",
+  "bugs": {
+    "url": "https://github.com/OWNER/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "session",
+    "cleanup"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}

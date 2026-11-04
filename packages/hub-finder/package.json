@@ -1,0 +1,45 @@
+{
+  "name": "dsh-plugin-hub-finder",
+  "version": "1.0.0",
+  "description": "find_dsh_plugin：中文搜索 DSH 社区插件（数据源 api.dsh-plugin.org），返回 GitHub 地址与安装命令",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-plugins.git",
+    "directory": "packages/hub-finder"
+  },
+  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/hub-finder#readme",
+  "bugs": {
+    "url": "https://github.com/OWNER/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "search",
+    "plugin-market"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}
