@@ -11,7 +11,7 @@ DSH 的信条是 **Everything is a Plugin** —— 这些插件都来自日常�
 | [bash](packages/bash/) | Windows 上的 bash 工具 + 子 agent 藏 pwsh + spill + 后台 job | host 工具 | 0.2.2-rc.1+ |
 | [loop-guard](packages/loop-guard/) | 思维链循环守卫：检测推理打转 → 截断本轮流 | host 钩子 | 0.2.2-rc.1+ |
 | [hub-finder](packages/hub-finder/) | 中文搜索 DSH 社区插件（工具 + 设置页 UI） | host + client | 0.2.2-rc.1+ |
-| [session-cleaner](packages/session-cleaner/) | 删除会话文件（官方只归档不删） | host + client | 0.2.2-rc.1+ |
+| [session-tidy](packages/session-tidy/) | 删除会话文件（官方只归档不删） | host + client | 0.2.2-rc.1+ |
 
 > 更多插件（balance / hw-monitor / goal-fold / chat-zoom / doc-guard / tls-proxy / comfyui …）会陆续迁入。
 
@@ -48,7 +48,7 @@ node scripts/check.mjs   # 语法 + 敏感串 + package.json 必填字段
 
 ## 免责
 
-这是社区插件，不是 DeepSeek 官方项目。`session-cleaner` 会删除会话文件（有二次确认），使用前请自行备份重要数据。
+这是社区插件，不是 DeepSeek 官方项目。`session-tidy` 会删除会话文件（有二次确认），使用前请自行备份重要数据。
 
 ## License
 

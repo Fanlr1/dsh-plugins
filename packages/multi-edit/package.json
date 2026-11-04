@@ -16,12 +16,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/dsh-plugins.git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
     "directory": "packages/multi-edit"
   },
-  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/multi-edit#readme",
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/multi-edit#readme",
   "bugs": {
-    "url": "https://github.com/OWNER/dsh-plugins/issues"
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
   },
   "keywords": [
     "dsh",

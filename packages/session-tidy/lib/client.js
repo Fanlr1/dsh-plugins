@@ -1,4 +1,4 @@
-// dsh-plugin-session-cleaner -- client 侧
+// dsh-plugin-session-tidy -- client 侧
 //
 // 入口：侧边栏底部动作区（sidebar.footer.action）
 // 能力：列出会话（按工作区分组）→ 勾选 → 二次确认 → 移到回收目录 → 可再清空
@@ -7,7 +7,7 @@
 // 不 require 任何 Harness Client 包（官方明令）。
 
 window.__ModuleLoader__.load({
-    id: 'dsh-plugin-session-cleaner',
+    id: 'dsh-plugin-session-tidy',
     factory: (require) => {
         var module = { exports: {} };
         var exports = module.exports;
@@ -27,17 +27,17 @@ window.__ModuleLoader__.load({
             const prim = require('@deepseek-ai/dsh-client-ui-primitives');
             if (prim && typeof prim.MenuItemButton === 'function') {
                 MenuItemButton = prim.MenuItemButton;
-                console.log('[session-cleaner] ✅ 官方 primitive 就绪：菜单项用 MenuItemButton（官方样式）');
+                console.log('[session-tidy] ✅ 官方 primitive 就绪：菜单项用 MenuItemButton（官方样式）');
             } else {
-                console.log('[session-cleaner] primitives 能加载但没有 MenuItemButton，降级自绘');
+                console.log('[session-tidy] primitives 能加载但没有 MenuItemButton，降级自绘');
             }
         } catch (e) {
-            console.log('[session-cleaner] MenuItemButton 取不到，降级自绘: ' + ((e && e.message) || e));
+            console.log('[session-tidy] MenuItemButton 取不到，降级自绘: ' + ((e && e.message) || e));
         }
 
         const NS = 'sc';
-        const SHORTCUT_ID = 'session-cleaner.open';
-        const CSS_TAG_ID = 'dsh-plugin-session-cleaner/client.css';
+        const SHORTCUT_ID = 'session-tidy.open';
+        const CSS_TAG_ID = 'dsh-plugin-session-tidy/client.css';
 
         const CSS = [
             '.' + NS + '_btn{',
@@ -128,7 +128,7 @@ window.__ModuleLoader__.load({
 
             const load = react.useCallback(() => {
                 setLoading(true); setErr('');
-                api('/session-cleaner/list')
+                api('/session-tidy/list')
                     .then((d) => {
                         setData(d);
                         setPicked(initialPick ? { [initialPick]: true } : {});
@@ -168,7 +168,7 @@ window.__ModuleLoader__.load({
             const doDelete = async () => {
                 setBusy(true); setErr('');
                 try {
-                    const r = await api('/session-cleaner/delete', {
+                    const r = await api('/session-tidy/delete', {
                         ids: pickedList.map((s) => ({ id: s.id, workspace: s.workspace })),
                     });
                     const moved = (r.moved || []).length;
@@ -183,7 +183,7 @@ window.__ModuleLoader__.load({
             const doEmpty = async () => {
                 setBusy(true); setErr('');
                 try {
-                    const r = await api('/session-cleaner/empty-trash', {});
+                    const r = await api('/session-tidy/empty-trash', {});
                     setNote('已彻底删除 ' + r.count + ' 个会话 / ' + fmtBytes(r.bytes));
                     load();
                 } catch (e) { setErr(String(e.message || e)); }
@@ -362,7 +362,7 @@ window.__ModuleLoader__.load({
             // 一次性诊断：确认插槽到底给了哪些 props（尤其 useShortcuts 在不在）
             if (!MenuDeleteItem.logged) {
                 MenuDeleteItem.logged = true;
-                console.log('[session-cleaner] 菜单项 props: ' + Object.keys(props).join(', '));
+                console.log('[session-tidy] 菜单项 props: ' + Object.keys(props).join(', '));
             }
             const useMenuOpen = react.useMemo(
                 () => (typeof props.useMenuOpenState === 'function' ? props.useMenuOpenState : () => [false, () => {}]),
@@ -391,7 +391,7 @@ window.__ModuleLoader__.load({
                 }
                 setPhase('busy');
                 try {
-                    const r = await api('/session-cleaner/delete-one', { id: sessionId });
+                    const r = await api('/session-tidy/delete-one', { id: sessionId });
                     if (r && r.ok) {
                         if (r.already) setAlready(true);   // 文件本就不在（多半已删过）
                         // ★ 2026-10-14 追加：文件已移走 ⇒ 再走【官方归档】，让 host 状态立即更新。
@@ -402,7 +402,7 @@ window.__ModuleLoader__.load({
                         try {
                             if (typeof window.__scArchive === 'function') await window.__scArchive(sessionId);
                         } catch (e) {
-                            console.warn('[session-cleaner] 官方归档未成功（文件已删，列表要重启才更新）: ' + ((e && e.message) || e));
+                            console.warn('[session-tidy] 官方归档未成功（文件已删，列表要重启才更新）: ' + ((e && e.message) || e));
                         }
                         setPhase('done');
                         setTimeout(() => { try { setMenuOpen(false); } catch (e) { /* 忽略 */ } }, 900);
@@ -440,7 +440,7 @@ window.__ModuleLoader__.load({
         }
 
         function apply(ctx) {
-            console.log('[session-cleaner] client apply()');
+            console.log('[session-tidy] client apply()');
             // 修饰键跟踪（Ctrl+点击跳过确认用）
             if (ctx && typeof ctx.effect === 'function') ctx.effect(trackModifiers);
             else trackModifiers();
@@ -453,10 +453,10 @@ window.__ModuleLoader__.load({
                 window.__scArchive = (ws && typeof ws.archiveSession === 'function')
                     ? function (id) { return ws.archiveSession(id); }
                     : null;
-                console.log('[session-cleaner] 官方归档通道: ' + (window.__scArchive ? '✅ uiWorkspace.archiveSession 可用' : '⚠️ 不可用（删完列表要重启才更新）'));
+                console.log('[session-tidy] 官方归档通道: ' + (window.__scArchive ? '✅ uiWorkspace.archiveSession 可用' : '⚠️ 不可用（删完列表要重启才更新）'));
             } catch (e) {
                 window.__scArchive = null;
-                console.log('[session-cleaner] 官方归档通道探测失败: ' + ((e && e.message) || e));
+                console.log('[session-tidy] 官方归档通道探测失败: ' + ((e && e.message) || e));
             }
 
             // 快捷键注册已移除（2026-10-13）。
@@ -466,22 +466,22 @@ window.__ModuleLoader__.load({
             // ① 会话行的 "..." 菜单（官方 slot；插件项排在 archive(400) 之后）
             try {
                 ctx.slots.inject('sidebar.workspaces.session.menu.item', () => ctx.slots.register(
-                    { name: 'sidebar.workspaces.session.menu.item', id: 'session-cleaner.delete', order: 500 },
+                    { name: 'sidebar.workspaces.session.menu.item', id: 'session-tidy.delete', order: 500 },
                     MenuDeleteItem
                 ));
-                console.log('[session-cleaner] ✅ 菜单项已注册到 sidebar.workspaces.session.menu.item');
+                console.log('[session-tidy] ✅ 菜单项已注册到 sidebar.workspaces.session.menu.item');
             } catch (e) {
-                console.error('[session-cleaner] 菜单项注册失败: ' + ((e && e.message) || e));
+                console.error('[session-tidy] 菜单项注册失败: ' + ((e && e.message) || e));
             }
             // ② 侧边栏底部的批量入口
             try {
                 ctx.slots.inject('sidebar.footer.action', () => ctx.slots.register(
-                    { name: 'sidebar.footer.action', id: 'dsh-plugin-session-cleaner', order: 90 },
+                    { name: 'sidebar.footer.action', id: 'dsh-plugin-session-tidy', order: 90 },
                     EntryButton
                 ));
-                console.log('[session-cleaner] ✅ 入口已注册到 sidebar.footer.action');
+                console.log('[session-tidy] ✅ 入口已注册到 sidebar.footer.action');
             } catch (e) {
-                console.error('[session-cleaner] 入口注册失败: ' + ((e && e.message) || e));
+                console.error('[session-tidy] 入口注册失败: ' + ((e && e.message) || e));
             }
         }
 

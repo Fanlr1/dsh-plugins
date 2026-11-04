@@ -1,5 +1,5 @@
 {
-  "name": "dsh-plugin-session-cleaner",
+  "name": "dsh-plugin-session-tidy",
   "version": "1.0.0",
   "description": "清理 DSH 会话文件（官方只归档不删除）：会话行菜单 + 侧边栏批量面板",
   "type": "module",
@@ -20,12 +20,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/dsh-plugins.git",
-    "directory": "packages/session-cleaner"
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/session-tidy"
   },
-  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/session-cleaner#readme",
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/session-tidy#readme",
   "bugs": {
-    "url": "https://github.com/OWNER/dsh-plugins/issues"
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
   },
   "keywords": [
     "dsh",

@@ -303,7 +303,7 @@ export function finderDefinition(deps) {
 //   这也是那个 dsh-plugin 界面市场的架构（它挂 /dsh-plugin-hub/catalog）。
 //
 // ★ 安全边界：
-//   · 只收 loopback（remoteAddress + Host 头双重校验，照 dsh-plugin-session-cleaner 的做法）
+//   · 只收 loopback（remoteAddress + Host 头双重校验，照 dsh-plugin-session-tidy 的做法）
 //   · 只读：两个 GET，不接受任何写操作，不碰 profile、不装卸任何插件
 //   · 参数复用工具那套（searchIndex / normalizeRepo），行为与 find_dsh_plugin 完全一致
 

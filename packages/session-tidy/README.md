@@ -1,4 +1,4 @@
-# dsh-plugin-session-cleaner
+# dsh-plugin-session-tidy
 
 清理 DSH **会话文件**——官方只提供「归档」，磁盘上的 session 文件仍在，长年积累。
 
@@ -19,11 +19,11 @@ Junction 方式（同其它插件）+ profile 的 `cordis.patch.yml`：
 
 ```yaml
 - insert:
-    - id: session-cleaner
-      name: 'dsh-plugin-session-cleaner'
+    - id: session-tidy
+      name: 'dsh-plugin-session-tidy'
 ```
 
-> ⚠️ **npm 上已有同名的 `dsh-plugin-session-cleaner`（他人）**：如需发布到 npm，请使用 scope（如 `@your-name/dsh-plugin-session-cleaner`）或改名；本仓库的包名仅用于源码分发。
+> 本插件原名 `session-cleaner`；因 npm 上已有同名包（他人），开源版统一改名为 `dsh-plugin-session-tidy`（含内部插件 id / 路由 / 快捷键）。
 
 ## 适配
 

@@ -1,4 +1,4 @@
-// dsh-plugin-session-cleaner -- host 侧
+// dsh-plugin-session-tidy -- host 侧
 //
 // 为什么需要它：官方【只归档不删除】（dsh-client-ui-workspace README：
 // 「会话可以归档但绝不会被删除」；dsh-session-persistence-jsonl：「seam 无删除接口」），
@@ -18,7 +18,7 @@ import { readdir, stat, mkdir, rename, rm, readFile, writeFile } from 'node:fs/p
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 
-export const name = 'session-cleaner';
+export const name = 'session-tidy';
 
 /** webServer 承载路由；agents 用来识别"正在运行的会话"（拿不到就退化为只靠 mtime）。 */
 export const inject = ['webServer', 'agents'];
@@ -270,7 +270,7 @@ export async function moveToTrash(ids, guards = {}) {
  * ★ 安全措施（针对「DSH 也会写这个文件」）：
  *   ① 写前【重读】磁盘最新内容，不拿旧副本覆盖
  *   ② 只改那三个数组，其余字段原样带回
- *   ③ 先备份 .bak-session-cleaner-<时间戳>
+ *   ③ 先备份 .bak-session-tidy-<时间戳>
  *   ④ 原子写：先写临时文件再 rename（避免写一半被读到）
  *   ⑤ 整段 try/catch —— 这步失败【不影响删除本身】（文件已经移走了）
  *
@@ -300,14 +300,14 @@ export async function unregisterSessions(ids) {
         if (!removed) return { ok: true, removed: 0 };
 
         const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-        await writeFile(WORKSPACE_JSON + '.bak-session-cleaner-' + stamp, before, 'utf8').catch(() => { /* 备份失败不阻断 */ });
+        await writeFile(WORKSPACE_JSON + '.bak-session-tidy-' + stamp, before, 'utf8').catch(() => { /* 备份失败不阻断 */ });
         const tmp = WORKSPACE_JSON + '.tmp-' + Date.now();
         await writeFile(tmp, JSON.stringify(j, null, 2), 'utf8');
         await rename(tmp, WORKSPACE_JSON);
-        console.log('[session-cleaner] 已从 workspace 注册表摘除 ' + removed + ' 处引用（重启 DSH 后列表生效）');
+        console.log('[session-tidy] 已从 workspace 注册表摘除 ' + removed + ' 处引用（重启 DSH 后列表生效）');
         return { ok: true, removed: removed };
     } catch (e) {
-        console.log('[session-cleaner] 摘除注册表失败（不影响已删除的文件）: ' + ((e && e.message) || e));
+        console.log('[session-tidy] 摘除注册表失败（不影响已删除的文件）: ' + ((e && e.message) || e));
         return { ok: false, error: (e && e.message) || String(e) };
     }
 }
@@ -320,7 +320,7 @@ export async function emptyTrash() {
 }
 
 export function apply(ctx) {
-    console.log('[session-cleaner] apply() 开始');
+    console.log('[session-tidy] apply() 开始');
 
     const guard = (req, res) => {
         if (isLoopback(req)) return true;
@@ -330,7 +330,7 @@ export function apply(ctx) {
 
     ctx.effect(() => ctx.webServer.register({
         kind: 'exact',
-        path: '/session-cleaner/list',
+        path: '/session-tidy/list',
         handler: async (req, res) => {
             if (!guard(req, res)) return;
             if (req.method !== 'GET') { sendJson(res, 405, { error: 'method' }); return; }
@@ -350,11 +350,11 @@ export function apply(ctx) {
                 sendJson(res, 500, { ok: false, error: (e && e.message) || String(e) });
             }
         },
-    }), 'session-cleaner: list');
+    }), 'session-tidy: list');
 
     ctx.effect(() => ctx.webServer.register({
         kind: 'exact',
-        path: '/session-cleaner/delete',
+        path: '/session-tidy/delete',
         handler: async (req, res) => {
             if (!guard(req, res)) return;
             if (req.method !== 'POST') { sendJson(res, 405, { error: 'method' }); return; }
@@ -366,34 +366,34 @@ export function apply(ctx) {
                 const reg = await readRegistry();
                 const active = activeSessionIds(ctx);
                 const r = await moveToTrash(ids, { pinned: reg.pinned, active });
-                console.log('[session-cleaner] 移入回收目录 ' + r.moved.length + ' 个，拒绝/失败 ' + r.failed.length);
+                console.log('[session-tidy] 移入回收目录 ' + r.moved.length + ' 个，拒绝/失败 ' + r.failed.length);
                 sendJson(res, 200, { ok: true, ...r });
             } catch (e) {
                 sendJson(res, 500, { ok: false, error: (e && e.message) || String(e) });
             }
         },
-    }), 'session-cleaner: delete');
+    }), 'session-tidy: delete');
 
     ctx.effect(() => ctx.webServer.register({
         kind: 'exact',
-        path: '/session-cleaner/empty-trash',
+        path: '/session-tidy/empty-trash',
         handler: async (req, res) => {
             if (!guard(req, res)) return;
             if (req.method !== 'POST') { sendJson(res, 405, { error: 'method' }); return; }
             try {
                 const info = await emptyTrash();
-                console.log('[session-cleaner] 清空回收目录 ' + info.count + ' 个 / ' + info.bytes + ' B');
+                console.log('[session-tidy] 清空回收目录 ' + info.count + ' 个 / ' + info.bytes + ' B');
                 sendJson(res, 200, { ok: true, ...info });
             } catch (e) {
                 sendJson(res, 500, { ok: false, error: (e && e.message) || String(e) });
             }
         },
-    }), 'session-cleaner: empty-trash');
+    }), 'session-tidy: empty-trash');
 
     // ★ 会话行菜单用：只给 sessionId（菜单插槽的 props 里没有 workspace），host 自己定位。
     ctx.effect(() => ctx.webServer.register({
         kind: 'exact',
-        path: '/session-cleaner/delete-one',
+        path: '/session-tidy/delete-one',
         handler: async (req, res) => {
             if (!guard(req, res)) return;
             if (req.method !== 'POST') { sendJson(res, 405, { error: 'method' }); return; }
@@ -416,13 +416,13 @@ export function apply(ctx) {
                     sendJson(res, 200, { ok: false, error: (r.failed[0] && r.failed[0].error) || '未移动', ...r });
                     return;
                 }
-                console.log('[session-cleaner] 菜单删除: ' + id + ' (' + hit.bytes + ' B)');
+                console.log('[session-tidy] 菜单删除: ' + id + ' (' + hit.bytes + ' B)');
                 sendJson(res, 200, { ok: true, id, bytes: hit.bytes, ...r });
             } catch (e) {
                 sendJson(res, 500, { ok: false, error: (e && e.message) || String(e) });
             }
         },
-    }), 'session-cleaner: delete-one');
+    }), 'session-tidy: delete-one');
 
-    console.log('[session-cleaner] ✅ 四条路由已注册');
+    console.log('[session-tidy] ✅ 四条路由已注册');
 }

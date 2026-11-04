@@ -20,12 +20,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/dsh-plugins.git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
     "directory": "packages/hub-finder"
   },
-  "homepage": "https://github.com/OWNER/dsh-plugins/tree/main/packages/hub-finder#readme",
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/hub-finder#readme",
   "bugs": {
-    "url": "https://github.com/OWNER/dsh-plugins/issues"
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
   },
   "keywords": [
     "dsh",
