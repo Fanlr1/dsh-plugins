@@ -1,12 +1,7 @@
 name: publish
 
 # Trusted Publishing（OIDC）发布会：无需长期 npm token
-# 前置：在 npmjs.com 每个包的 Settings → Trusted publishing 配置
-#   Provider: GitHub Actions
-#   Organization/user: Fanlr1
-#   Repository: dsh-plugins
-#   Workflow filename: publish.yml
-#   Allowed actions: 勾选 npm publish
+# 前置：每个包的 npm Settings → Trusted publishing 已配置（GitHub Actions / Fanlr1 / dsh-plugins / publish.yml）
 # 触发：打 tag（v*）或手动 workflow_dispatch
 
 on:
@@ -31,6 +26,16 @@ jobs:
           - loop-guard
           - hub-finder
           - session-tidy
+          - hw-monitor
+          - deepseek-balance
+          - goal-fold
+          - queue-fold
+          - chat-zoom
+          - chat-user-edit
+          - hide-update-retry
+          - github-tools
+          - scoped-instructions
+          - runtime-log
     steps:
       - uses: actions/checkout@v4
 
@@ -40,10 +45,27 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
 
-      - name: Check package
+      - name: Decide whether to publish
+        id: decide
         working-directory: packages/${{ matrix.package }}
-        run: node --check lib/index.js
+        run: |
+          set -e
+          PKG=$(node -p "require('./package.json').name")
+          VER=$(node -p "require('./package.json').version")
+          echo "pkg=$PKG" >> "$GITHUB_OUTPUT"
+          echo "ver=$VER" >> "$GITHUB_OUTPUT"
+          if ! npm view "$PKG" version >/dev/null 2>&1; then
+            echo "action=skip-first-release" >> "$GITHUB_OUTPUT"
+            echo "跳过 $PKG：包尚未发布到 npm（需先手动首发一次并配置 trusted publisher）"
+          elif npm view "$PKG@$VER" version >/dev/null 2>&1; then
+            echo "action=skip-exists" >> "$GITHUB_OUTPUT"
+            echo "跳过 $PKG@$VER：该版本已存在于 npm"
+          else
+            echo "action=publish" >> "$GITHUB_OUTPUT"
+            echo "将发布 $PKG@$VER"
+          fi
 
       - name: Publish (OIDC)
+        if: steps.decide.outputs.action == 'publish'
         working-directory: packages/${{ matrix.package }}
         run: npm publish --access public --provenance
