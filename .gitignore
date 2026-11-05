@@ -9,3 +9,5 @@ dist/
 .DS_Store
 Thumbs.db
 package-lock.json
+trust-all.cmd
+trust-log.txt
