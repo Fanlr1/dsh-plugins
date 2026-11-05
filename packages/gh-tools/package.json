@@ -1,0 +1,39 @@
+{
+  "name": "dsh-plugin-gh-tools",
+  "version": "0.1.0",
+  "description": "GitHub 仓库管理工具：PR / Issue / CI runs / 评论（零依赖；凭据走 DSH credential seam）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/gh-tools"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/gh-tools#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "github",
+    "pull-request",
+    "ci",
+    "actions"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {}
+}

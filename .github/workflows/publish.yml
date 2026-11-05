@@ -34,6 +34,7 @@ jobs:
           - chat-user-edit
           - hide-update-retry
           - github-tools
+          - gh-tools
           - scoped-instructions
           - runtime-log
     steps:

@@ -3,7 +3,7 @@
 一组为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）写的社区插件。
 DSH 的信条是 **Everything is a Plugin** —— 这些插件都来自日常使用的真实痛点。
 
-## 插件（15 个）
+## 插件（16 个）
 
 | 插件 | 一句话 | 形态 |
 |---|---|---|
@@ -20,6 +20,7 @@ DSH 的信条是 **Everything is a Plugin** —— 这些插件都来自日常�
 | [chat-user-edit](packages/chat-user-edit/) | 编辑已发出的用户消息（不删历史） | host + client |
 | [hide-update-retry](packages/hide-update-retry/) | 隐藏桌面端「重试更新」提示 | client |
 | [github-tools](packages/github-tools/) | 只读 GitHub 工具（仓库/文件树/路由探针） | host 工具 |
+| [gh-tools](packages/gh-tools/) | GitHub 仓库管理：PR / Issue / CI runs / 评论 | host 工具 |
 | [scoped-instructions](packages/scoped-instructions/) | 子 agent 指令剔除 scope:main 段（省 token） | host 钩子 |
 | [runtime-log](packages/runtime-log/) | 把 DSH 全系统日志落盘 | host 钩子 |
 
