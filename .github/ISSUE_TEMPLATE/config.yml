@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 讨论与提问 / Discussions
+    url: https://github.com/Fanlr1/dsh-plugins/discussions
+    about: 非 bug、非功能请求的交流
+  - name: 📖 安装与文档 / Docs
+    url: https://github.com/Fanlr1/dsh-plugins#安装通用步骤
+    about: 各插件的安装方式与适配说明

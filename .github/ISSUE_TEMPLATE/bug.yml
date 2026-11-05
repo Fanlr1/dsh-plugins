@@ -1,0 +1,59 @@
+name: 🐛 Bug 报告 / Bug report
+description: 插件行为异常 / 安装失败 / DSH 升级后失效
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！请尽量提供完整信息，便于快速定位。
+        Thanks for reporting! Please include enough details to reproduce.
+  - type: input
+    id: dsh-version
+    attributes:
+      label: DSH 版本 / DSH version
+      description: 设置 → 关于，或 exe 文件属性里的版本
+      placeholder: '例如 0.2.2-rc.1'
+    validations:
+      required: true
+  - type: input
+    id: plugin
+    attributes:
+      label: 哪个插件 / Which plugin
+      placeholder: '例如 dsh-plugin-multi-edit'
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统 / OS
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 现象与复现步骤 / What happened
+      description: '做了什么 → 期望什么 → 实际什么'
+      placeholder: |
+        1. 打开 ...
+        2. 点击 ...
+        期望: ... / 实际: ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志 / 报错 / 截图
+      description: '~/.dsh/logs/dsh-runtime.log 相关行、浏览器 console 报错、截图'
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 自查 / Self-check
+      options:
+        - label: 已确认插件是最新版本 / Using the latest plugin version
+        - label: 已搜索过现有 Issue，没有重复 / Searched existing issues
+        - label: 已尝试重启 DSH 后仍复现 / Still reproduces after restarting DSH
