@@ -25,6 +25,11 @@ Junction 方式（同其它插件）+ profile 的 `cordis.patch.yml`：
 
 > 本插件原名 `session-cleaner`；因 npm 上已有同名包（他人），开源版统一改名为 `dsh-plugin-session-tidy`（含内部插件 id / 路由 / 快捷键）。
 
+## 更新记录
+
+- **1.0.2**：修复「删除会话后归档列表留一条幽灵记录」——client 在官方 `archiveSession` 之后补调 host 摘除；host 启动时自动清理「归档但会话文件已不存在」的 id。
+- 1.0.1 / 1.0.0：首发。
+
 ## 适配
 
 - DSH **0.2.2-rc.1+** · 零运行时依赖

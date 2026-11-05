@@ -312,6 +312,47 @@ export async function unregisterSessions(ids) {
     }
 }
 
+/**
+ * 清理「归档但会话文件已不存在」的幽灵 id（2026-11-06 加）。
+ *
+ * 背景：client 删除会话成功后会走官方 uiWorkspace.archiveSession 让侧边栏立即消失 ——
+ * 那是 host 内存状态 + 磁盘写回，且顺序在 unregisterSessions 之后 ⇒ 归档数组里又塞回该 id。
+ * 结果是「会话删了，归档列表里还留一条幽灵记录」（2026-10/11 实测累计 11 条）。
+ * 做法：读磁盘 ⇒ 只保留「会话目录还在」的归档 id ⇒ 备份 + 原子写。
+ */
+export async function pruneGhostArchived() {
+    try {
+        const before = await readFile(WORKSPACE_JSON, 'utf8');
+        const j = JSON.parse(before);
+        const g = j?.global ?? {};
+        const arch = Array.isArray(g.archivedSessionIds) ? g.archivedSessionIds : null;
+        if (!arch || !arch.length) return { removed: 0 };
+        const alive = new Set();
+        let wsList = [];
+        try { wsList = await readdir(SESSIONS, { withFileTypes: true }); } catch { return { removed: 0 }; }
+        for (const w of wsList) {
+            if (!w.isDirectory()) continue;
+            let inner = [];
+            try { inner = await readdir(join(SESSIONS, w.name), { withFileTypes: true }); } catch { continue; }
+            for (const s of inner) if (s.isDirectory()) alive.add(s.name);
+        }
+        const keep = arch.filter((id) => alive.has(String(id)));
+        if (keep.length === arch.length) return { removed: 0 };
+        g.archivedSessionIds = keep;
+        const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        await writeFile(WORKSPACE_JSON + '.bak-prune-archive-' + stamp, before, 'utf8').catch(() => { /* 备份失败不阻断 */ });
+        const tmp = WORKSPACE_JSON + '.tmp-' + Date.now();
+        await writeFile(tmp, JSON.stringify(j, null, 2), 'utf8');
+        await rename(tmp, WORKSPACE_JSON);
+        const n = arch.length - keep.length;
+        console.log('[session-tidy] 清理幽灵归档 ' + n + ' 条');
+        return { removed: n };
+    } catch (e) {
+        console.log('[session-tidy] 清理幽灵归档失败: ' + ((e && e.message) || e));
+        return { removed: 0, error: (e && e.message) || String(e) };
+    }
+}
+
 /** 彻底清空回收目录。 */
 export async function emptyTrash() {
     const info = await trashInfo();
@@ -321,6 +362,9 @@ export async function emptyTrash() {
 
 export function apply(ctx) {
     console.log('[session-tidy] apply() 开始');
+    // ★ 启动自愈（2026-11-06）：清掉「归档但文件已不存在」的幽灵记录。
+    //   延迟 8 秒 —— apply 可能早于 DSH 把 workspace 状态加载完，等它稳定再改磁盘。
+    setTimeout(() => { pruneGhostArchived().catch(() => {}); }, 8000).unref?.();
 
     const guard = (req, res) => {
         if (isLoopback(req)) return true;
@@ -424,5 +468,28 @@ export function apply(ctx) {
         },
     }), 'session-tidy: delete-one');
 
-    console.log('[session-tidy] ✅ 四条路由已注册');
+    // ★ client 删除成功、走完官方归档之后再调一次：把归档数组里的该 id 摘掉（2026-11-06）。
+    //   时序修复：官方 archiveSession 会写回 host 内存状态；若只在 delete 处理里摘除，
+    //   会被随后的写回覆盖 ⇒ 归档列表留幽灵记录。
+    ctx.effect(() => ctx.webServer.register({
+        kind: 'exact',
+        path: '/session-tidy/unregister',
+        handler: async (req, res) => {
+            if (!guard(req, res)) return;
+            if (req.method !== 'POST') { sendJson(res, 405, { error: 'method' }); return; }
+            try {
+                const body = JSON.parse((await readBody(req)) || '{}');
+                const id = String(body.id || '');
+                if (!id) { sendJson(res, 400, { ok: false, error: '缺少 id' }); return; }
+                const removed = await unregisterSessions([id]);
+                const pruned = await pruneGhostArchived();
+                console.log('[session-tidy] 归档摘除 ' + id + ' -> ' + JSON.stringify(removed));
+                sendJson(res, 200, { ok: true, ...removed, pruned });
+            } catch (e) {
+                sendJson(res, 500, { ok: false, error: (e && e.message) || String(e) });
+            }
+        },
+    }), 'session-tidy: unregister');
+
+    console.log('[session-tidy] ✅ 五条路由已注册');
 }

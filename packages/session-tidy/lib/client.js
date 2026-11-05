@@ -404,6 +404,9 @@ window.__ModuleLoader__.load({
                         } catch (e) {
                             console.warn('[session-tidy] 官方归档未成功（文件已删，列表要重启才更新）: ' + ((e && e.message) || e));
                         }
+                        // ★ 2026-11-06：官方归档会把 id 塞回 archivedSessionIds（host 内存 + 磁盘写回），
+                        //   再调一次 host 的 unregister 把归档里的该 id 摘掉 —— 否则归档列表留幽灵记录。
+                        try { await api('/session-tidy/unregister', { id: sessionId }); } catch (e) { /* 非致命 */ }
                         setPhase('done');
                         setTimeout(() => { try { setMenuOpen(false); } catch (e) { /* 忽略 */ } }, 900);
                         // 不再自动刷新页面：那会打断用户正在进行的对话。

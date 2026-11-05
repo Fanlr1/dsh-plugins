@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-session-tidy",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "清理 DSH 会话文件（官方只归档不删除）：会话行菜单 + 侧边栏批量面板",
   "type": "module",
   "main": "lib/index.js",
