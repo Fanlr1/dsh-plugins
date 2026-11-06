@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-scoped-instructions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Give subagents a trimmed workspace-instruction baseline: strip scope:main sections that only the main agent needs.",
   "type": "module",
   "main": "lib/index.js",
