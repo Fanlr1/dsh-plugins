@@ -1,0 +1,37 @@
+{
+  "name": "dsh-plugin-lang-guard",
+  "version": "1.0.0",
+  "description": "思维链语言自检：每回合客观测量汉字占比并落盘（不干预生成）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/lang-guard"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/lang-guard#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "lang-guard",
+    "reasoning",
+    "language",
+    "observability"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}
