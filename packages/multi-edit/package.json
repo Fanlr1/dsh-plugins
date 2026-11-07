@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-multi-edit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "给 DSH agent 的 multi_edit 工具：一次调用改多文件/多处，两阶段预检 + dryRun",
   "type": "module",
   "main": "lib/index.js",
