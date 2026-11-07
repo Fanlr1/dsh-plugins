@@ -38,6 +38,7 @@ jobs:
           - scoped-instructions
           - runtime-log
           - lang-guard
+          - comfyui
     steps:
       - uses: actions/checkout@v4
 

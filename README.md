@@ -24,6 +24,7 @@ DSH 的信条是 **Everything is a Plugin** —— 这些插件都来自日常�
 | [scoped-instructions](packages/scoped-instructions/) | 子 agent 指令剔除 scope:main 段（省 token） | host 钩子 |
 | [runtime-log](packages/runtime-log/) | 把 DSH 全系统日志落盘 | host 钩子 |
 | [lang-guard](packages/lang-guard/) | 思维链语言自检：每回合量汉字占比并落盘（只读观测） | host 钩子 |
+| [comfyui](packages/comfyui/) | ComfyUI 工作流：列出 / 参数 / 运行 / 取图（UI + API 格式，同源路由） | host 工具 |
 
 > 更多插件（chat-zoom 之外：doc-guard / tls-proxy / comfyui / local-llm / lang-guard …）会陆续迁入。
 

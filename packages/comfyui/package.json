@@ -1,0 +1,37 @@
+{
+  "name": "dsh-plugin-comfyui",
+  "version": "0.1.0",
+  "description": "ComfyUI 工作流：列出 / 提交 / 轮询 / 取图（支持 UI 与 API 两种格式）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fanlr1/dsh-plugins.git",
+    "directory": "packages/comfyui"
+  },
+  "homepage": "https://github.com/Fanlr1/dsh-plugins/tree/main/packages/comfyui#readme",
+  "bugs": {
+    "url": "https://github.com/Fanlr1/dsh-plugins/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "comfyui",
+    "workflow",
+    "image-generation",
+    "video-generation"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}
